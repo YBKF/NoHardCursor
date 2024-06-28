@@ -4,21 +4,19 @@
 #include "no_hard_cursor.h"
 
 #undef __DEBUG
-#define __DEBUG_
+// #define __DEBUG
 
-// default option: SOFT_CURSOR
-static int parsedOptCode = OPT_SOFT_CURSOR_CODE;
+static int parsedOptCode = OPT_SOFT_CURSOR_CODE; // default option
 
-/**
- * 解析参数(分辨长短参数, 并去除参数前缀) -> 识别参数(根据参数针对到具体选项代号) -> 接受代号, 执行功能
- */
+static void usage(int status);
 
 int main(int argc, char const *argv[])
 {
+    setProgramName(argv[0]);
     if (argc > 2)
     {
         fputs("Too many arguments.\n", stderr);
-        exit(EXIT_FAILURE);
+        usage(EXIT_FAILURE);
     }
 
     if (argc != 1)
@@ -44,12 +42,12 @@ int main(int argc, char const *argv[])
         break;
 
     case OPT_HELP_USAGE_CODE:
-        // TODO: usage();
+        usage(EXIT_SUCCESS);
         break;
 
     default:
         fputs("ERROR: Invalid option code.\n", stderr);
-        exit(EXIT_FAILURE);
+        usage(EXIT_FAILURE);
     }
 
 #ifdef __DEBUG
@@ -58,4 +56,38 @@ int main(int argc, char const *argv[])
 #endif
 
     return 0;
+}
+
+static void usage(int status)
+{
+    FILE *out = status ? stderr : stdout;
+
+    const char *programName = getProgramName();
+
+    fprintf(out, "\
+Usage: %s [OPTION]\n",
+            programName);
+    fprintf(out, "\
+Setting your cursor rendering method.\n\
+\n");
+
+    fprintf(out, "\
+With no parameter, will use software rendering cursor.\n\
+\n");
+
+    fprintf(out, "\
+  [NULL], -s, --soft    Setting your cursor rendering method to software rendering\n");
+    fprintf(out, "\
+          -h, --hard    Setting your cursor rendering method to hardware rendering\n");
+    fprintf(out, "\
+              --help    display this help and exit\n");
+    fprintf(out, "\
+\n");
+    fprintf(out, "\
+Examples:\n\
+  %s -h     Use hardware rendering cursor.\n\
+  %s        No parameter, use software rendering by default.\n",
+            programName, programName);
+
+    exit(status);
 }

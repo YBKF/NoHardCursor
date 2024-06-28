@@ -7,6 +7,19 @@
 #define ARG_TYPE_SINGLE (0x0010)
 #define ARG_TYPE_LONG (0x0011)
 
+static const char *PROGRAM_NAME = NULL;
+
+void setProgramName(const char *programName)
+{
+    if (programName != NULL)
+        PROGRAM_NAME = programName;
+}
+
+const char *getProgramName()
+{
+    return PROGRAM_NAME;
+}
+
 /**
  * 检查参数是否合规，
  * 合规，则返回字符串参数在 "-" 或 "--" 之后的首地址，并将参数类型存储到 argType 中；
@@ -112,7 +125,7 @@ int parseArgOpt(const char *arg)
             break;
 
         default:
-            fprintf(stderr, "ERROR: Invalid mode: %s\n", checkedArg);
+            fprintf(stderr, "ERROR: Invalid option: %s\n", checkedArg);
             parsedOptCode = OPT_INVALID_CODE;
             break;
         }
@@ -133,7 +146,7 @@ int parseArgOpt(const char *arg)
         }
         else
         {
-            fprintf(stderr, "ERROR: Invalid mode: %s\n", checkedArg);
+            fprintf(stderr, "ERROR: Invalid option: %s\n", checkedArg);
             parsedOptCode = OPT_INVALID_CODE;
         }
     }

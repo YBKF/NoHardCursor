@@ -25,6 +25,8 @@
 #define OPT_HARD_CURSOR_TXT_SHORT ('h')
 //      OPT_HELP_USAGE_TXT_SHORT (0)
 
+void setProgramName(const char *programName);
+const char *getProgramName();
 int parseArgOpt(const char *arg);
 // int parseArg(const char *arg);
 
