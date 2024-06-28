@@ -2,7 +2,7 @@
 
 SRC_DIR = ./src
 BUILD_DIR = ./build
-TARGET = $(BUILD_DIR)/NohardCursor.exe
+TARGET = $(BUILD_DIR)/NoHardCursor.exe
 
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
