@@ -72,21 +72,21 @@ static const char *checkArgFormat(const char *arg, int *argType)
 
 /**
  * 解析检查后的参数，并返回参数对应的模式的代表值:
- * MODE_INVALID_CODE        (0x0000)
- * MODE_SOFT_CURSOR_CODE    (0x0001)
- * MODE_HARD_CURSOR_CODE    (0x0002)
+ * OPT_INVALID_CODE         (0x0000)
+ * OPT_SOFT_CURSOR_CODE     (0x0001)
+ * OPT_HARD_CURSOR_CODE     (0x0002)
+ * OPT_HELP_USAGE_CODE      (0x0003)
  *
  * 若函数运行过程中出错，则返回EOF
- *
  */
-static int parseArgMode(const char *arg)
+int parseArgOpt(const char *arg)
 {
     if (arg == NULL)
         return EOF;
 
     int argType;
     const char *checkedArg;
-    int parsedModeCode;
+    int parsedOptCode;
 
     if ((checkedArg = checkArgFormat(arg, &argType)) == NULL)
     {
@@ -95,7 +95,7 @@ static int parseArgMode(const char *arg)
         if (argType == EOF)
             fputs("ERROR: Invalid argument formation.\n", stderr);
 
-        return MODE_INVALID_CODE;
+        return OPT_INVALID_CODE;
     }
 
     // 参数已经过检查且符合格式
@@ -103,34 +103,38 @@ static int parseArgMode(const char *arg)
     {
         switch (*checkedArg)
         {
-        case 's':
-            parsedModeCode = MODE_SOFT_CURSOR_CODE;
+        case OPT_SOFT_CURSOR_TXT_SHORT:
+            parsedOptCode = OPT_SOFT_CURSOR_CODE;
             break;
 
-        case 'h':
-            parsedModeCode = MODE_HARD_CURSOR_CODE;
+        case OPT_HARD_CURSOR_TXT_SHORT:
+            parsedOptCode = OPT_HARD_CURSOR_CODE;
             break;
 
         default:
             fprintf(stderr, "ERROR: Invalid mode: %s\n", checkedArg);
-            parsedModeCode = MODE_INVALID_CODE;
+            parsedOptCode = OPT_INVALID_CODE;
             break;
         }
     }
     else if (argType == ARG_TYPE_LONG)
     {
-        if (strncmp(checkedArg, MODE_SOFT_CURSOR_TXT, ARG_LENGTH_MAX) == 0)
+        if (strncmp(checkedArg, OPT_SOFT_CURSOR_TXT_LONG, ARG_LENGTH_MAX) == 0)
         {
-            parsedModeCode = MODE_SOFT_CURSOR_CODE;
+            parsedOptCode = OPT_SOFT_CURSOR_CODE;
         }
-        else if (strncmp(checkedArg, MODE_HARD_CURSOR_TXT, ARG_LENGTH_MAX) == 0)
+        else if (strncmp(checkedArg, OPT_HARD_CURSOR_TXT_LONG, ARG_LENGTH_MAX) == 0)
         {
-            parsedModeCode = MODE_HARD_CURSOR_CODE;
+            parsedOptCode = OPT_HARD_CURSOR_CODE;
+        }
+        else if (strncmp(checkedArg, OPT_HELP_USAGE_TXT_LONG, ARG_LENGTH_MAX) == 0)
+        {
+            parsedOptCode = OPT_HELP_USAGE_CODE;
         }
         else
         {
             fprintf(stderr, "ERROR: Invalid mode: %s\n", checkedArg);
-            parsedModeCode = MODE_INVALID_CODE;
+            parsedOptCode = OPT_INVALID_CODE;
         }
     }
     else
@@ -139,44 +143,44 @@ static int parseArgMode(const char *arg)
         return EOF;
     }
 
-    return parsedModeCode;
+    return parsedOptCode;
 }
 
-/**
- * 解析检查后的参数，并返回参数对应的模式的代表值
- *
- * HARD_CURSOR (0)
- * SOFT_CURSOR (-1)
- *
- */
-int parseArg(const char *arg)
-{
-    // 参数为空指针
-    if (arg == NULL)
-    {
-        fputs("ERROR: null argument.\n", stderr);
-        exit(EXIT_FAILURE);
-    }
+// /**
+//  * 解析检查后的参数，并返回参数对应的选项的代表值
+//  *
+//  * HARD_CURSOR (0)
+//  * SOFT_CURSOR (-1)
+//  *
+//  */
+// int parseArg(const char *arg)
+// {
+//     // 参数为空指针
+//     if (arg == NULL)
+//     {
+//         fputs("ERROR: null argument.\n", stderr);
+//         exit(EXIT_FAILURE);
+//     }
 
-    int parsedModeCode;
+//     int parsedOptCode;
 
-    // 参数解析函数遇到错误
-    if ((parsedModeCode = parseArgMode(arg)) == EOF)
-    {
-        fputs("ERROR: Failed to parse the argument.\n", stderr);
-        exit(EXIT_FAILURE);
-    }
+//     // 参数解析函数遇到错误
+//     if ((parsedOptCode = parseArgOpt(arg)) == EOF)
+//     {
+//         fputs("ERROR: Failed to parse the argument.\n", stderr);
+//         exit(EXIT_FAILURE);
+//     }
 
-    switch (parsedModeCode)
-    {
-    case MODE_SOFT_CURSOR_CODE:
-        return SOFT_CURSOR;
+//     switch (parsedOptCode)
+//     {
+//     case OPT_SOFT_CURSOR_CODE:
+//         return SOFT_CURSOR;
 
-    case MODE_HARD_CURSOR_CODE:
-        return HARD_CURSOR;
+//     case OPT_HARD_CURSOR_CODE:
+//         return HARD_CURSOR;
 
-    default:
-        fputs("ERROR: Invalid mode code.\n", stderr);
-        exit(EXIT_FAILURE);
-    }
-}
+//     default:
+//         fputs("ERROR: Invalid option code.\n", stderr);
+//         exit(EXIT_FAILURE);
+//     }
+// }
