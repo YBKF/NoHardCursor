@@ -144,6 +144,10 @@ int parseArgOpt(const char *arg)
         {
             parsedOptCode = OPT_HELP_USAGE_CODE;
         }
+        else if (strncmp(checkedArg, OPT_SHOW_SETTING_TXT_LONG, ARG_LENGTH_MAX) == 0)
+        {
+            parsedOptCode = OPT_SHOW_SETTING_CODE;
+        }
         else
         {
             fprintf(stderr, "ERROR: Invalid option: %s\n", checkedArg);
