@@ -45,6 +45,20 @@ int main(int argc, char const *argv[])
         usage(EXIT_SUCCESS);
         break;
 
+    case OPT_SHOW_SETTING_CODE:
+        const char *optTXT;
+        SystemParametersInfo(SPI_GETMOUSETRAILS, 0, &uStateInfo, 0);
+        if (uStateInfo == (UINT)SOFT_CURSOR)
+            optTXT = OPT_SOFT_CURSOR_TXT_LONG;
+        else
+            optTXT = OPT_HARD_CURSOR_TXT_LONG;
+
+        fprintf(stdout, "\
+SPI_GETMOUSETRAILS\n\
+param: %s (%u(UINT), %d(INT))\n",
+                optTXT, uStateInfo, uStateInfo);
+        break;
+
     default:
         fputs("ERROR: Invalid option code.\n", stderr);
         usage(EXIT_FAILURE);
@@ -79,6 +93,8 @@ With no parameter, will use software rendering cursor.\n\
   [NULL], -s, --soft    Setting your cursor rendering method to software rendering\n");
     fprintf(out, "\
           -h, --hard    Setting your cursor rendering method to hardware rendering\n");
+    fprintf(out, "\
+              --show    Show current setting\n");
     fprintf(out, "\
               --help    display this help and exit\n");
     fprintf(out, "\
