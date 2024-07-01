@@ -82,7 +82,7 @@ static void usage(int status)
 Usage: %s [OPTION]\n",
             programName);
     fprintf(out, "\
-Setting your cursor rendering method.\n\
+Setting your mouse cursor rendering in Microsoft Windows.\n\
 \n");
 
     fprintf(out, "\
