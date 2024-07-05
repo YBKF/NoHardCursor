@@ -60,6 +60,7 @@ Or MinGW-w64:
 ## Known issues
 
 - Mouse Trails will be disabled due to the use of relevant options.
+- The cursor will not display in some applications or games in full screen mode, to solve this issue use borderless mode if possible.
 
 ## Inspiration
 
