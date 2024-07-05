@@ -2,7 +2,7 @@
 
 Setting the cursor rendering in Microsoft Windows.
 
-When you changed the color profile of your monitor in Windows, the mouse cursor might be looked "weird" (Obvious on colored cursor).
+When you changed the color profile of your monitor or anything else in Windows, the mouse cursor might be looked "strange" (The cursor becomes pale, obvious on the colored cursor).
 
 By changing the mouse cursor rendering setting to software rendering, it can make your cursor match the monitor's color profile, appearing more "natural".
 
