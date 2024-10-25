@@ -1,5 +1,7 @@
 # NoHardCursor
 
+**English | [简体中文](readme/README_zh_CN.md)**
+
 Setting the cursor rendering in Microsoft Windows.
 
 When you changed the color profile of your monitor or anything else in Windows, the mouse cursor might be looked "strange" (The cursor becomes pale, obvious on the colored cursor).
