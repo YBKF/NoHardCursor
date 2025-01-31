@@ -96,13 +96,13 @@ With no parameter, will use software rendering cursor.\n\
     fprintf(out, "\
               --show    Show current setting\n");
     fprintf(out, "\
-              --help    display this help and exit\n");
+              --help    Display this help and exit\n");
     fprintf(out, "\
 \n");
     fprintf(out, "\
 Examples:\n\
-  %s -h     Use hardware rendering cursor.\n\
-  %s        No parameter, use software rendering by default.\n",
+  %s -h     # Use hardware rendering cursor.\n\
+  %s        # No parameter, use software rendering by default.\n",
             programName, programName);
 
     exit(status);
